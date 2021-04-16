@@ -1,0 +1,266 @@
+2.2.1 Question
+Q: Why might we be interested in both training accuracy and testing accuracy? What do these two numbers tell us about our current model?
+A: Training accuracy tells us how well the model learns from the training set, whereas test accuracy shows how well the trained model generalizes on the test set (unseen dataset). If the training accuracy is significantly more than the test accuracy, it indicates overfitting. Also, when the training accuracy is small, it indicates underfitting. Thus a model is good if it achieves good training accuracy and the test accuracy is comparable to the training accuracy.
+
+		(using parameters as originally given and softmax model)
+		training accuracy: 0.901600
+		test accuracy:     0.909300
+
+As we see that the training accuracy and test accuracy are comparable, we can say that the learnt model generalizes well on unseen data and has ~91% chances of predicting the correct class.
+
+
+2.2.2 Question
+Q: Try varying the model parameter for learning rate to different powers of 10 (i.e. 10^1, 10^0, 10^-1, 10^-2, 10^-3) and training the model. What patterns do you see and how does the choice of learning rate affect both the loss during training and the final model accuracy?
+A: When the learning rate is very high (10.0), the performance of the model is very poor (even worse than a random naive model) which shows that the gradient descent diverges instead of converging to a minima (we also get nan as loss). As the learning rate is decreased to 1.0, the test accuracy improves but the loss values keep on oscillating (unstable). For a learning rate of 0.1, the test accuracy is best (91.74%) and the loss values decrease swiftly without too much oscillation. As the learning rate is further decreased to 0.001, the loss improves slowly, hence for the same number of iterations, the test accuracy is less (86.69%) and the final loss is also bad as compared to the final loss using learning rate of 0.1.
+
+		learning rate of 10.0
+		---------------------------
+		training accuracy: 0.098717
+		test accuracy:     0.098000
+
+		learning rate of 1.0
+		---------------------------
+		training accuracy: 0.898917
+		test accuracy:     0.898500	
+
+		learning rate of 0.1
+		---------------------------
+		training accuracy: 0.916550
+		test accuracy:     0.917400	
+
+		learning rate of 0.01
+		---------------------------
+		training accuracy: 0.901600
+		test accuracy:     0.909300
+
+		learning rate of 0.001
+		---------------------------
+		training accuracy: 0.856700
+		test accuracy:     0.866900	
+
+
+2.2.3 Question
+Q: Try varying the parameter for weight decay to different powers of 10: (10^0, 10^-1, 10^-2, 10^-3, 10^-4, 10^-5). How does weight decay affect the final model training and test accuracy?
+A:	Weight decay, in the form of regularization penalizes larger weights, thus preventing overfitting and reducing the model complexity. When the weight decay coefficient is very high, the model becomes too simple and doesn't learn anything useful. So, given learning rate of 0.01 and weight decay coefficient of 1.0, the test accuracy is ~77% (as compared against 90.93% using no weight decay). As the decay coefficient decreases, the model accuracy improves. For decay coefficient of 0.0001, the training and test accuracy is best at ~91%.
+
+		weight decay of 1.0
+		---------------------------
+		training accuracy: 0.764300
+		test accuracy:     0.777400
+
+		weight decay of 0.1
+		---------------------------
+		training accuracy: 0.855417
+		test accuracy:     0.865500
+
+		weight decay of 0.01
+		---------------------------
+		training accuracy: 0.895433
+		test accuracy:     0.901400
+
+		weight decay of 0.001
+		---------------------------
+		training accuracy: 0.901167
+		test accuracy:     0.908200
+
+		weight decay of 0.0001
+		---------------------------
+		training accuracy: 0.901650
+		test accuracy:     0.909300
+
+		weight decay of 0.00001
+		---------------------------
+		training accuracy: 0.901600
+		test accuracy:     0.909300
+
+
+2.3.1 Question
+Q: Currently the model uses a logistic activation for the first layer. Try using all the other activation functions we programmed. How well do they perform? What's best?
+A: When using the given neural network with learning rate of 0.01 and no weight decay, we find that TANH activation for the first layer leads to best training (92.42%) and test accuracy (92.53%) followed by Leaky Relu and Relu. 
+
+		Using learning rate of 0.01 and no weight decay
+		-----------------------------------------------
+		LOGISTIC
+		--------
+		training accuracy: 0.883517
+		test accuracy:     0.889300
+
+		LINEAR
+		--------
+		training accuracy: 0.911667
+		test accuracy:     0.914900
+
+		TANH (best)
+		------------
+		training accuracy: 0.924167
+		test accuracy:     0.925300
+
+		RELU
+		----
+		training accuracy: 0.913917
+		test accuracy:     0.919100
+
+		LRELU (second best)
+		-------------------
+		training accuracy: 0.916150
+		test accuracy:     0.920300
+
+		SOFTMAX
+		--------
+		training accuracy: 0.316883
+		test accuracy:     0.314800
+
+
+2.3.2 Question
+Q: Using the same activation, find the best (power of 10) learning rate for your model. What is the training accuracy and testing accuracy?
+A: using TANH activation, we find that learning rate of 0.1 leads to best training and test performance (not using any weight decay) of 96.07% and 95.37% respectively.
+
+		learning rate of 1.0
+		---------------------
+		training accuracy: 0.894517
+		test accuracy:     0.896500
+
+		learning rate of 0.1
+		---------------------
+		training accuracy: 0.960683
+		test accuracy:     0.953700
+
+		learning rate of 0.01
+		---------------------
+		training accuracy: 0.924167
+		test accuracy:     0.925300
+
+		learning rate of 0.001
+		---------------------
+		training accuracy: 0.844933
+		test accuracy:     0.854600
+
+
+2.3.3 Question
+Q: Right now the regularization parameter `decay` is set to 0. Try adding some decay to your model. What happens, does it help? Why or why not may this be?
+A: Using TANH activation and learning rate of 0.1, we vary the weight decay coefficient (in power of 10) and find that weight decay of 0.0001 helps improve the test accuracy from 95.37% t0 95.39%, which is very small. Since, weight decay helps in preventing overfitting and model complexity, the model accuracy is not that much affected by the regularization term as the model used is not that complex and comparable training and test performance indicate no overfitting. Thus, accounting for the marginally small improvement in model performance when using weight decay.
+
+		weight decay of 0.1
+		--------------------
+		training accuracy: 0.816450
+		test accuracy:     0.827700
+
+		weight decay of 0.01
+		--------------------
+		training accuracy: 0.913767
+		test accuracy:     0.914400
+
+		weight decay of 0.001
+		---------------------
+		training accuracy: 0.952683
+		test accuracy:     0.947900
+
+		weight decay of 0.0001
+		----------------------
+		training accuracy: 0.960583
+		test accuracy:     0.953900
+
+		weight decay of 0.00001
+		-----------------------
+		training accuracy: 0.960817
+		test accuracy:     0.953600
+
+
+2.3.4 Question
+Q: Modify your model so it has 3 layers instead of 2. The layers should be `inputs -> 64`, `64 -> 32`, and `32 -> outputs`. Also modify your model to train for 3000 iterations instead of 1000. Look at the training and testing accuracy for different values of decay (powers of 10, 10^-4 -> 10^0). Which is best? Why?
+A: Using tanh activation for both hidden layers and learning rate of 0.1, we vary the weight decay coefficient as specified. And we observe that a small weight decay coefficient of 0.0001 helps to improve the test accuracy from 96.92% to 97.07%. When the weight decay coefficient is of higher magnitude, the larger weights get penalized more and the model complexity suffers. So, we see a decrease in training and test accuracy. But with weight decay parameter of 0.0001, the model complexity is optimially penalized (even without any weight decay, training and test accuracy are comparable indicating probably no overfitting) and we see some improvement in the test accuracy as the learnt model is not that susceptible to the the noise in the training data.
+
+		weight decay of 1.0
+		---------------------
+		training accuracy: 0.098717
+		test accuracy:     0.098000
+
+		weight decay of 0.1
+		---------------------
+		training accuracy: 0.741700
+		test accuracy:     0.748900
+
+		weight decay of 0.01
+		---------------------
+		training accuracy: 0.903167
+		test accuracy:     0.905600
+
+		weight decay of 0.001
+		---------------------
+		training accuracy: 0.973667
+		test accuracy:     0.965900
+
+		weight decay of 0.0001
+		----------------------
+		training accuracy: 0.984133
+		test accuracy:     0.970700
+
+		no weight decay
+		----------------------
+		training accuracy: 0.984767
+		test accuracy:     0.969200
+
+
+2.3.5 Question
+Q: Modify your model so it has 4 layers instead of 2. The layers should be `inputs -> 128`, `128 -> 64`, `64 -> 32`, and `32 -> outputs`. Do the same analysis as in 2.3.4.
+A: Using tanh activation for all three hidden layers, learning rate of 0.1 and 3000 iterations, we vary the weight decay coefficient as specified. But when comparing against the test accuracy of 97.33% (no weight decay), we don't see any improvement in the model test performance when using weight decay. Even when we have increased the model complexity by adding one more layer, but the regularization doesn't seem to help which indicates that the learnt model is not overfitting to the noise in the training data and can generalize fairly well on the test set.
+
+		weight decay of 1.0
+		---------------------
+		training accuracy: 0.098717
+		test accuracy:     0.098000
+
+		weight decay of 0.1
+		---------------------
+		training accuracy: 0.604367
+		test accuracy:     0.613400
+
+		weight decay of 0.01
+		---------------------
+		training accuracy: 0.908950
+		test accuracy:     0.912200
+
+		weight decay of 0.001
+		---------------------
+		training accuracy: 0.975467
+		test accuracy:     0.967200
+
+		weight decay of 0.0001
+		----------------------
+		training accuracy: 0.984017
+		test accuracy:     0.969700
+
+		no weight decay
+		----------------------
+		training accuracy: 0.988200
+		test accuracy:     0.973300
+
+
+2.3.6 Question
+Q: Use the 2 layer model with the best activation for layer 1 but linear activation for layer 2. Now implement the functions `l1_loss` and `l2_loss` and change the necessary code in `classifier.cpp` to use these loss functions. Observe the output values and accuracy of the model and write down your observations for both the loss functions compared to cross-entropy loss. P.S. L2 and L1 losses are generally used for regression, but this is a classification problem.
+A: When we use L1 and L2 loss instead of cross-entropy loss, we see that the training and test accuracy go down a bit. The observations are listed below. Since cross entropy penalizes heavily those predictions which are confident, it pushes the model to learn the right probability distribution.
+
+		Using learning rate of 0.01 with no weight decay, tanh activation and 1000 iterations:
+
+		L2 loss
+		---------------------------------
+		training accuracy: 0.919167
+		test accuracy:     0.924200
+
+		L1 loss after changing derivative
+		----------------------------------
+		training accuracy: 0.910450
+		test accuracy:     0.914600
+
+		cross-entropy loss
+		----------------------------------
+		training accuracy: 0.924167
+		test accuracy:     0.925300
+
+
+3.2.1 Question
+Q: How well does your network perform on the CIFAR dataset?
+A: We use the 4 layer neural network with tanh as hidden layer activation and softmax for the last output layer. The learning rate is set to 0.01, with weight decay of 0.0001 and the model is trained for 5k iterations. The final training and test accuracy are 52.2% and 48.91% respectively.
+
+		training accuracy: 0.521960
+		test accuracy:     0.489100
